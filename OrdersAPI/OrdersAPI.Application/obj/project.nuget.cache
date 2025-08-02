@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "49Dh+l+6u+s=",
+  "success": true,
+  "projectFilePath": "/Users/adela_tang/Desktop/BackendTask/Assignment-Backend/OrdersAPI/OrdersAPI.Application/OrdersAPI.Application.csproj",
+  "expectedPackageFiles": [
+    "/Users/adela_tang/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/Users/adela_tang/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.3/microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
+    "/Users/adela_tang/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
