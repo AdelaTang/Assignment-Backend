@@ -20,7 +20,6 @@ namespace OrdersAPI.UnitTests.Repositories
         {
             var options = new DbContextOptionsBuilder<OrdersDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                // 方案1: 使用正确的命名空间
                 .ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
@@ -147,20 +146,18 @@ namespace OrdersAPI.UnitTests.Repositories
         [Fact]
         public async Task CreateOrderAsync_InvalidOrder_ThrowsException()
         {
-            // Arrange - 创建一个可能导致异常的场景
+            // Arrange
             var order = new Order
             {
                 OrderId = Guid.NewGuid(),
-                CustomerName = new string('X', 150), // 超过最大长度限制
+                CustomerName = new string('X', 150),
                 CreatedAt = DateTime.UtcNow,
                 Items = new List<OrderItem>()
             };
 
             // Act & Assert
-            // 对于In-Memory数据库，我们验证操作能正常处理或抛出合理异常
             var act = () => _repository.CreateOrderAsync(order);
             
-            // In-Memory数据库可能不强制所有约束，所以这个测试验证方法不会崩溃
             await act.Should().NotThrowAsync();
         }
 
@@ -179,16 +176,16 @@ namespace OrdersAPI.UnitTests.Repositories
 
             var duplicateOrder = new Order
             {
-                OrderId = orderId, // 相同的OrderId
+                OrderId = orderId, // same OrderId
                 CustomerName = "Second Customer", 
                 CreatedAt = DateTime.UtcNow,
                 Items = new List<OrderItem>()
             };
 
-            // 先添加第一个订单
+            // add the first order
             await _repository.CreateOrderAsync(firstOrder);
 
-            // Act & Assert - 尝试添加重复的OrderId应该失败
+            // Act & Assert - try to add the duplicated orderId - should be failed
             await Assert.ThrowsAnyAsync<Exception>(
                 () => _repository.CreateOrderAsync(duplicateOrder));
         }
